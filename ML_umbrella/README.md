@@ -11,3 +11,19 @@
 - Модель машинного обучения предсказывает произойдет ли заражение с точностью 66%
 - Наиболее устойчивые значения модель показывает на 20-30% выборки от ее исходного размера.
 - На распростронение вируса больше всего влиеят вес, рост, возраст испытуемого и доза вируса. 
+
+### Использованные инструменты и библиотеки
+```
+pandas
+seaborn
+matplotlib.pyplot
+numpy
+sklearn.model_selection
+train_test_split
+sklearn.metrics
+confusion_matrix
+sklearn.tree
+DecisionTreeClassifier
+sklearn.metrics
+accuracy_score
+```
