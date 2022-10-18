@@ -11,5 +11,17 @@
    * конверсия из визита в покупку с окном в 7 дней повысится
    * средний чек покупки не снизится
 
-# Вывод:
+## Вывод:
 Видео с производства не повлияли на конверсию в плокупку, однако, средний чек от одного пользователя увеличился. 
+
+### Использованные инструменты и библиотеки
+```
+pandas
+numpy 
+seaborn 
+matplotlib.pyplot
+statsmodels.stats.powe
+bootstrapped.bootstrap
+bootstrapped.stats_functions
+bootstrapped.compare_functions
+```
