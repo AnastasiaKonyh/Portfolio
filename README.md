@@ -17,7 +17,7 @@
        <td>1</td>
        <td>
           <b>
-             <a "https://github.com/AnastasiaKonyh/Portfolio/tree/main/Excel">
+             <a href="https://github.com/AnastasiaKonyh/Portfolio/tree/main/Excel">
              Аналитика онлайн кинотеатра</a>
           </b>
      </td>
