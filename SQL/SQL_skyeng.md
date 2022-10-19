@@ -168,4 +168,84 @@ with t_lessons as
  from t_m
  group by 1
  ````
+ # 6 Напишите запрос, который для каждого дня посчитает с нарастающим итогом количество успешных уроков, количество уроков, которые прогуляли студенты, и общее количество уроков. Не нужно учитывать пробные уроки.
+
+Сколько всего уроков было 13 января 2016 года?
+
+ ````sql
+ with classes_counts as 
+(select date_trunc('day', class_start_datetime) as class_day,
+       coalesce(class_status, 'NA') as class_status,
+       count(id_class) as classes
+from skyeng_db.classes
+where class_type != 'trial'
+group by 1, 2)
+select distinct class_day,
+       sum(case when class_status='success' then classes else 0 end) over(order by class_day rows between unbounded preceding and current row) as succesful_classes,
+       sum(case when class_status='failed_by_student' then classes else 0 end) over(order by class_day rows between unbounded preceding and current row) as failed_by_student_classes,
+       sum(classes) over(order by class_day rows between unbounded preceding and current row) as total_classes
+from classes_counts
+order by class_day
+````
+# 7 Напишите запрос, который позволит выбрать до 10 учителей из каждого департамента. 
+ ````sql
+ with data_with_id as
+(
+select id_teacher,
+       department,
+       max_teaching_level,
+       city,
+       country,
+       row_number() over(partition by department order by id_teacher) as id_in_dept
+from skyeng_db.teachers
+where department is not null
+)
+select *
+from data_with_id
+where id_in_dept <= 10
+order by department, id_in_dept
+````
+# 8. Посчитайте, сколько оплат успешно проходит каждый день. Вычислите скользящее среднее с окном 7, 31 день так, чтобы текущая строка была в середине диапазона.
+ ````sql
+ with daily_dinamics as
+ 	(select date_trunc ('day', transaction_datetime) as pay_day
+		,count (distinct id_transaction) pay_count
+	from skyeng_db.payments
+	where status_name = 'success'
+		and operation_name in ('Покупка уроков', 'Начисление корпоративному клиенту')
+		and id_transaction is not null
+	group by 1
+	)
+select pay_day, paay_count
+	,avg (pay_count) over (order by pay_day rows between 3 preceding and 3 following) as ma_7
+	,avg (pay_count) over (order by pay_day rows between 15 preceding and 15 following) as ma_31
+from daily_dinamics
+````
+# 9. Подготовьте выборку, которая отвечает на вопросы:
+- сколько оплат в месяц делают клиенты
+- сколько времени проходит от оплпты до оплаты
+- когда нужно начинать звонить студенту и "будить" его
+ ````sql
+ select user_id
+ 	,payment_amount
+	,transaction_datetime
+	,id_transaction
+	,row_number () over (partition by user_id order by transaction_datetime) as номер_оплаты
+	,row_number () over (partition by user_id
+		,date_trunc ('month', transaction_datetime) 
+		order by transaction_datetime rows between unbounded preceding and current row) as номер_оплаты_месяц
+	,sum (payment_amount) over (partition by user_id, date_trunc ('month' , transaction_datetime)
+		order by transaction_datetime rows between unbounded precedin and current row) as сумма_платежей
+	,lead (transaction_datetime) over (partition by user_id order by transaction_datetime) as след_оплата
+	,lag (transaction_datetime) over (partition by user_id order by transaction_datetime) as пред_оплата
+from skyeng_db.payments
+where status_name = 'success'
+	and operation_name in ('Покупка уроков', 'Начисление корпоративному клиенту')
+	and id_transaction is not null
+order by user_id
+````
+		
+	
+
+
 
