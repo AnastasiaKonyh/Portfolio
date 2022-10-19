@@ -24,6 +24,5 @@ sklearn.metrics
 confusion_matrix
 sklearn.tree
 DecisionTreeClassifier
-sklearn.metrics
 accuracy_score
 ```
