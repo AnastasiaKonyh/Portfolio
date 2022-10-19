@@ -55,7 +55,7 @@
 
 ## Инструменты проекта
 ```
-- Power BI
-- Tabular Editor
-- DAX
+Power BI
+Tabular Editor
+DAX
 ```
