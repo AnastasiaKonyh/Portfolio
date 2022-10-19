@@ -18,7 +18,7 @@
        <td>
           <b>
              <a "https://github.com/AnastasiaKonyh/Portfolio/tree/main/Excel">
-             Исследование надежности заемщиков</a>
+             Аналитика онлайн кинотеатра</a>
           </b>
      </td>
      <td>
