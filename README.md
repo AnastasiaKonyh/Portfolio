@@ -17,7 +17,7 @@
        <td>1</td>
        <td>
           <b>
-             <a https://github.com/AnastasiaKonyh/Portfolio/tree/main/Excel>
+             <a "https://github.com/AnastasiaKonyh/Portfolio/tree/main/Excel">
              Исследование надежности заемщиков</a>
           </b>
      </td>
